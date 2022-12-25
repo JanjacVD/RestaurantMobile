@@ -23,5 +23,12 @@ interface TitleInterface{
 export interface CategoryItemProps extends SectionItemProps {
   section_id: number;
 }
-
+export interface FoodItemProps extends SectionItemProps{
+    description: TitleInterface;
+    alergens: AlergenProps[];
+    category_id: number;
+    alergen?: number[];
+    price: number;
+}
+export interface AlergenProps extends SectionItemProps{}
 export type SubscreenProps = NativeStackScreenProps<any>;

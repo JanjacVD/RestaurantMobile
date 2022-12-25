@@ -9,7 +9,8 @@ export function MenuHome({navigation}: RouterProps) {
     <Container>
       <ButtonFullWidth text="Sekcije" action={() => navigation.navigate('SectionList')}/>
       <ButtonFullWidth text="Kategorije" action={() => navigation.navigate('CategoryList')}/>
-      <ButtonFullWidth text="Stavke" action={() => navigation.goBack()}/>
+      <ButtonFullWidth text="Stavke" action={() => navigation.navigate('FoodItemList')}/>
+      <ButtonFullWidth text="Alergeni" action={() =>  navigation.navigate('AlergenList')}/>
     </Container>
   );
 }

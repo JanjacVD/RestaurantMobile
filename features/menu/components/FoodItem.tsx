@@ -1,21 +1,13 @@
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  GestureResponderEvent,
-} from "react-native";
+import {View, Text} from "react-native";
 import {TouchableOpacity} from "react-native-gesture-handler";
-import {LIGHT_BLUE, WHITE} from "../../../data/Colors";
-import {SectionItemProps} from "../../../data/Interfaces";
-import {useNavigation} from "@react-navigation/native";
-export default function SectionItem({
-  section,
+import {FoodItemProps} from "../../../data/Interfaces";
+export default function FoodItem({
+  item,
   action,
 }: {
-  section: SectionItemProps;
+  item: FoodItemProps;
   action(): void;
 }) {
-  const {navigate} = useNavigation<any>();;
   return (
     <View
       style={{
@@ -30,7 +22,6 @@ export default function SectionItem({
     >
       <TouchableOpacity
         onLongPress={() => action()}
-        onPress={() => navigate('CategoryList', {section: section})}
         style={{
           width: "100%",
           height: "100%",
@@ -55,10 +46,10 @@ export default function SectionItem({
             textAlignVertical: "center",
           }}
         >
-          {section.order}
+          {item.order}
         </Text>
         <Text style={{fontSize: 16, textTransform: "capitalize"}}>
-          {section.title.hr}
+          {item.title.hr}
         </Text>
       </TouchableOpacity>
     </View>

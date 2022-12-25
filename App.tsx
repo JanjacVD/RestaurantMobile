@@ -3,50 +3,42 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomeScreen from "./screens/HomeScreen";
 import MenuScreen from "./screens/MenuScreen";
-import {RED, WHITE} from "./data/Colors";
-import {Button, Dimensions, Text} from "react-native";
-import {TouchableOpacity} from "react-native-gesture-handler";
-import SearchIcon from "./assets/SearchIcon";
-import BackIcon from "./assets/BackIcon";
+import {Dimensions} from "react-native";
+import FlashMessage from "react-native-flash-message";
+import Ionicons from "react-native-vector-icons/Ionicons";
 const Tabs = createBottomTabNavigator();
 const Width = Dimensions.get("screen").width;
+const Height = Dimensions.get("screen").height;
 export default function App() {
   return (
     <NavigationContainer>
+      <FlashMessage position={'top'}/>
       <StatusBar hidden={true} />
       <Tabs.Navigator
         detachInactiveScreens
-        screenOptions={({navigation, route}) => ({
-          tabBarStyle: {
-            flexDirection: "row",
-            width: "100%",
-            justifyContent: "space-around",
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+            if (route.name === "Home") {
+              iconName = focused
+                ? "ios-home-sharp"
+                : "ios-home-outline";
+            } else if (route.name === "Settings") {
+              iconName = focused ? "settings-sharp" : "settings-outline";
+            }
+            else if(route.name === "Gallery"){
+              iconName = focused ? "ios-images-sharp" : "ios-images-outline"
+            }
+            else if(route.name === "Reservations"){
+              iconName = focused ? "ios-book-sharp" : "ios-book-outline"
+            }
+            else if(route.name === "Menu"){
+              iconName = focused ? "ios-fast-food-sharp" : "ios-fast-food-outline"
+            }
+            // You can return any component that you like here!
+            return <Ionicons name={iconName || ""} size={size} color={color} />;
           },
-          tabBarButton: () => {
-            const state = navigation.getState();
-            const index = state.index;
-            const arr = state.routeNames;
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.navigate(route.name)}
-                style={{
-                  height: Width / 6,
-                  width: Width / 6,
-                  marginHorizontal: Width / 60,
-                  borderRadius:
-                    arr[index] === route.name ? Width / 6 / 2 : Width / 6 / 4,
-                  marginTop: arr[index] === route.name ? -10 : 0,
-                  backgroundColor: arr[index] === route.name ? RED : WHITE,
-                  borderWidth: 1,
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={{fontSize: 10}}>{route.name}</Text>
-              </TouchableOpacity>
-            );
-          },
+         
           headerShown: true,
           headerTitle: "App name",
           headerTitleAlign: "center",
@@ -64,34 +56,7 @@ export default function App() {
           component={MenuScreen}
         />
         <Tabs.Screen
-          options={({navigation, route}) => ({
-            tabBarLabel: "Rezervacije",
-            tabBarButton: () => {
-              const state = navigation.getState();
-              const index = state.index;
-              const arr = state.routeNames;
-              return (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate(route.name)}
-                  style={{
-                    height: Width / 5,
-                    width: Width / 5,
-                    marginHorizontal: Width / 100,
-                    borderRadius:
-                      arr[index] === route.name ? Width / 6 / 2 : Width / 6 / 4,
-                    marginTop: arr[index] === route.name ? -10 : 0,
-                    backgroundColor: arr[index] === route.name ? RED : WHITE,
-                    borderWidth: 1,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Text style={{fontSize: 10}}>{route.name}</Text>
-                </TouchableOpacity>
-              );
-            },
-          })}
+          options={{tabBarLabel: "Rezervacije"}}
           name="Reservations"
           component={HomeScreen}
         />
